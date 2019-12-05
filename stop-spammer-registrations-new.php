@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) )  die;
-
+/*
 opcache_invalidate(__FILE__, true);
 opcache_invalidate(__DIR__.'/includes/ss-admin-options.php',true);
 opcache_invalidate(__DIR__.'/settings/settings.php',true); 
@@ -22,6 +22,7 @@ opcache_invalidate(__DIR__.'/stop-spammer-registrations-new.php',true);
 opcache_invalidate(__DIR__.'/classes/ss_get_bcache.php',true);
 opcache_invalidate(__DIR__.'/classes/ss_get_gcache.php',true);
 //opcache_invalidate(__DIR__.'/settings/jet_ss_mixed_utl.php',true);
+*/
 
 
 /*

@@ -1,0 +1,15 @@
+/*
+	FULL TRANSLATED - pot & po
+	sfs-plugin.pot	- template for any transl
+	ru_RU.mo.po + .ru_RU.mo
+*/
+FULL:
+	settings.php
+	ss_allowlist_settings.php
+	ss_allowreq.php
+	ss_cache.php	+ classes/ss_get_bcache.php classes/ss_get_gcache.php
+	ss_denylist_settings.php 
+	ss_diagnostics.php
+	ss_summary.php
+
+CURWORK:

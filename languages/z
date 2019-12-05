@@ -1,0 +1,14 @@
+opcache_invalidate(__DIR__.'/settings/settings.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_allowlist_settings.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_allowreq.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_cache.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_challenge.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_denylist_settings.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_diagnostics.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_network.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_options.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_option_maint.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_reports.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_summary.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_threat_scan.php',true); 
+opcache_invalidate(__DIR__.'/settings/ss_webservices_settings.php',true); 

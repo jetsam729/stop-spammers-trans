@@ -1,29 +1,5 @@
 <?php
 if ( ! defined( 'ABSPATH' ) )  die;
-/*
-opcache_invalidate(__FILE__, true);
-opcache_invalidate(__DIR__.'/includes/ss-admin-options.php',true);
-opcache_invalidate(__DIR__.'/settings/settings.php',true); 
-opcache_invalidate(__DIR__.'/settings/ss_allowlist_settings.php',true); 
-opcache_invalidate(__DIR__.'/settings/ss_allowreq.php',true);
-opcache_invalidate(__DIR__.'/settings/ss_cache.php',true); 
-opcache_invalidate(__DIR__.'/settings/ss_challenge.php',true); 
-opcache_invalidate(__DIR__.'/settings/ss_denylist_settings.php',true); 
-opcache_invalidate(__DIR__.'/settings/ss_diagnostics.php',true); 
-opcache_invalidate(__DIR__.'/settings/ss_network.php',true); 
-opcache_invalidate(__DIR__.'/settings/ss_option_maint.php',true); 
-opcache_invalidate(__DIR__.'/settings/ss_options.php',true);
-opcache_invalidate(__DIR__.'/settings/ss_reports.php',true);
-opcache_invalidate(__DIR__.'/settings/ss_summary.php',true);
-opcache_invalidate(__DIR__.'/settings/ss_threat_scan.php',true); 
-opcache_invalidate(__DIR__.'/settings/ss_webservices_settings.php',true); 
-opcache_invalidate(__DIR__.'/stop-spammer-registrations-new.php',true);
-
-opcache_invalidate(__DIR__.'/classes/ss_get_bcache.php',true);
-opcache_invalidate(__DIR__.'/classes/ss_get_gcache.php',true);
-//opcache_invalidate(__DIR__.'/settings/jet_ss_mixed_utl.php',true);
-*/
-
 
 /*
 Plugin Name: Stop Spammers (beta)
@@ -53,10 +29,11 @@ add_action( 'admin_print_styles', 'ss_styles' );
 // hook the init event to start work
 add_action( 'init', 'ss_init', 0 );
 
-// dummy filters for addons
-add_filter( 'ss_addons_allow', 'ss_addons_d', 0 );
-add_filter( 'ss_addons_deny', 'ss_addons_d', 0 );
-add_filter( 'ss_addons_get', 'ss_addons_d', 0 );
+
+add_filter( 'ss_addons_allow',		'ss_addons_f_allow',	0 );
+add_filter( 'ss_addons_deny',		'ss_addons_f_deny',	0 );
+add_filter( 'ss_addons_get',		'ss_addons_f_get',	0 );
+
 
 // done - the reset will be done in the init event
 /*******************************************************************
@@ -723,3 +700,17 @@ function ss_user_reg_filter( $user_login ) {
 }
 
 require_once( 'includes/stop-spam-utils.php' );
+
+
+// for future / на перспективу
+function ss_addons_f_get( $config = []) {
+	return $config;
+}
+
+function ss_addons_f_deny( $config = []) {
+	return $config;
+}
+
+function ss_addons_f_allow( $config = []) {
+	return $config;
+}

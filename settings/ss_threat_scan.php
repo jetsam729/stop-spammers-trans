@@ -1,19 +1,16 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-} // just in case
-if ( ! current_user_can( 'manage_options' ) ) {
-	die( 'Access Denied' );
-}
+/* translate: full */
+
+if ( ! defined( 'ABSPATH' ) ) die;
+if ( ! current_user_can( 'manage_options' ) ) die( __('Access Denied',SFS_TXTDOMAIN) );
+
 ss_fix_post_vars();
 global $wpdb;
 global $wp_query;
 $pre     = $wpdb->prefix;
 $runscan = false;
-$nonce   = '';
-if ( array_key_exists( 'ss_stop_spammers_control', $_POST ) ) {
-	$nonce = $_POST['ss_stop_spammers_control'];
-}
+$nonce   = (array_key_exists( 'ss_stop_spammers_control',$_POST)?$_POST['ss_stop_spammers_control']:'');
+
 if ( ! empty( $nonce ) && wp_verify_nonce( $nonce, 'ss_stopspam_update' ) ) {
 	if ( array_key_exists( 'update_options', $_POST ) ) {
 		$runscan = true;
@@ -22,68 +19,79 @@ if ( ! empty( $nonce ) && wp_verify_nonce( $nonce, 'ss_stopspam_update' ) ) {
 $nonce = wp_create_nonce( 'ss_stopspam_update' );
 ?>
 <div id="ss-plugin" class="wrap ss-set-alt">
-    <h1>Stop Spammers — Threat Scan</h1>
-
+    <h1><?php echo __('Stop Spammers — Threat Scan',SFS_TXTDOMAIN); ?></h1>
     <div class="notice notice-warning">
 	<p>
 	<?php echo __('This feature is to be considered experimental. Use with caution and at your own risk.',SFS_TXTDOMAIN); ?>
 	</p>
     </div>
-    <p>This is a very simple threat scan that looks for things out of place in the content directory as well as the
-        database.</p>
-    <p>The process searches PHP files for the occurrence of the eval() function, which, although a valuable part of PHP
-        is also the door that hackers use in order to infect systems. The eval() function is avoided by many programmers
-        unless there is a real need. It is often used by hackers to hide their malicious code or to inject future
-        threats into infected systems. If you find a theme or a plugin that uses the eval() function it is safer to
-        delete it and ask the author to provide a new version that does not use this function.</p>
-    <p>The scan can take a few seconds and on larger or slower systems can time-out.</p>
+<?php if(!$runscan){ // убрать кнопку "скан", чтобы двадцать раз не нажимали после начала
+?>
+	<p>
+	<?php echo __('This is a very simple threat scan that looks for things out of place in the content directory as well as the database.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('The process searches PHP files for the occurrence of the eval() function, which, although a valuable part of PHP'
+			.' is also the door that hackers use in order to infect systems. The eval() function is avoided by many programmers'
+			.' unless there is a real need. It is often used by hackers to hide their malicious code or to inject future'
+			.' threats into infected systems. If you find a theme or a plugin that uses the eval() function it is safer to'
+			.' delete it and ask the author to provide a new version that does not use this function.'
+			,SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('The scan can take a few seconds and on larger or slower systems can time-out.',SFS_TXTDOMAIN);?>
+	</p>
     <form method="post" action="">
         <input type="hidden" name="update_options" value="update"/>
         <input type="hidden" name="ss_stop_spammers_control" value="<?php echo $nonce; ?>"/>
-        <p class="submit"><input class="button-primary" value="Run Scan" type="submit"/></p>
+        <p class="submit"><input class="button-primary" value="<?php echo __('Run Scan',SFS_TXTDOMAIN);?>" type="submit"/></p>
     </form>
+<?php }?>
 	<?php
 	if ( $runscan ) {
 		?>
-        <p>When you scan your system you undoubtedly see the eval used in Javascript because it is used in the
-            Javascript AJAX and JSON functionality. The appearance of eval in these cases does not mean that there is a
-            possible threat. It just means that you should inspect the code to make sure that it is in a Javascript
-            section and not native PHP.</p>
-        <p>The process continues its scan by checking the database tables for Javascript or HTML where it should not be
-            found.</p>
-        <p>Normally, Javascript can be found in the post body, but if the script tag is found in a title or a text field
-            where it does not belong it is probably because the script is hiding something, such as a hidden admin user,
-            so that the normal administration pages do not show bad records. The scan looks for this and displays the
-            table and record number where it believes there is something hinky.</p>
-        <p>The scan continues looking in the database for certain HTML in places where it does not belong. Recent
-            threats have been putting HTML into fields in the options table so that users will be sent to malicious
-            sites. The presence of HTML in options values is suspect and should be checked.</p>
-        <p>The options table will have things placed there by plugins so it is difficult to tell if scripts, iframes,
-            and other HTML tags are a threat. They will be reported, but they should be checked before deleting the
-            entries.</p>
-        <p>This process is just a simple scan and does not try to fix any problems. It will show things that may not be
-            threats, but should be checked. If anything shows up, you should try to repair the damage or hire someone to
-            do it. I am not a security expert, but a programmer who discovered these types of things in a friend's blog.
-            After many hours of checking I was able to fix the problem, but a professional could have done it faster and
-            easier, although they would have charged for it.</p>
-        <p>You probably do not have a backup to your blog, so if this scan shows you are clean, your next step is to
-            install one of the plugins that does regular backups of your system. Next, make sure you have the latest
-            WordPress version.</p>
-        <p>If you think you have problems, the first thing to do is change your user ID and password. Next make a backup
-            of the infected system. Any repairs to WordPress might delete important data so you might lose posts, and
-            the backup will help you recover missing posts.</p>
-        <p>The next step is to install the latest version of WordPress. The new versions usually have fixes for older
-            threats.</p>
-        <p>You may want to export your WordPress posts, make a new clean installation of WordPress, and then import the
-            old posts.</p>
-        <p>If this doesn't work it is time to get a pro involved.</p>
-        <h2>A clean scan does not mean you are safe. Please do backups and keep your installation up-to-date!</h2>
+	<p>
+	<?php echo __('When you scan your system you undoubtedly see the eval used in Javascript because it is used in the Javascript AJAX and JSON functionality. The appearance of eval in these cases does not mean that there is a possible threat. It just means that you should inspect the code to make sure that it is in a Javascript section and not native PHP.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('The process continues its scan by checking the database tables for Javascript or HTML where it should not be found.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('Normally, Javascript can be found in the post body, but if the script tag is found in a title or a text field where it does not belong it is probably because the script is hiding something, such as a hidden admin user, so that the normal administration pages do not show bad records. The scan looks for this and displays the table and record number where it believes there is something hinky.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('The scan continues looking in the database for certain HTML in places where it does not belong. Recent threats have been putting HTML into fields in the options table so that users will be sent to malicious sites. The presence of HTML in options values is suspect and should be checked.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('The options table will have things placed there by plugins so it is difficult to tell if scripts, iframes, and other HTML tags are a threat. They will be reported, but they should be checked before deleting the entries.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('This process is just a simple scan and does not try to fix any problems. It will show things that may not be threats, but should be checked. If anything shows up, you should try to repair the damage or hire someone to do it. I am not a security expert, but a programmer who discovered these types of things in a friend\'s blog. After many hours of checking I was able to fix the problem, but a professional could have done it faster and easier, although they would have charged for it.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('You probably do not have a backup to your blog, so if this scan shows you are clean, your next step is to install one of the plugins that does regular backups of your system. Next, make sure you have the latest WordPress version.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('If you think you have problems, the first thing to do is change your user ID and password. Next make a backup of the infected system. Any repairs to WordPress might delete important data so you might lose posts, and the backup will help you recover missing posts.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('The next step is to install the latest version of WordPress. The new versions usually have fixes for older threats.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('You may want to export your WordPress posts, make a new clean installation of WordPress, and then import the old posts.',SFS_TXTDOMAIN);?>
+	</p>
+        <p>
+	<?php echo __('If this doesn\'t work it is time to get a pro involved.',SFS_TXTDOMAIN);?>
+	</p>
+        <h2>
+	<?php echo __('A clean scan does not mean you are safe. Please do backups and keep your installation up-to-date!',SFS_TXTDOMAIN);?>
+	</h2>
         <hr/>
 		<?php
 		$disp = false;
 		flush();
 // lets try the posts - looking for script tags in data
-		echo "<br /><br />Testing Posts<br />";
+		echo '<br /><br />'.__('Testing Posts',SFS_TXTDOMAIN).'<br />';
 		$ptab = $pre . 'posts';
 		$sql  = "select ID,post_author,post_title,post_name,guid,post_content,post_mime_type
 from $ptab where 
@@ -166,16 +174,18 @@ INSTR(LCASE(post_mime_type), 'script') > 0
 				if ( strpos( strtolower( $myrow->post_mime_type ), 'script' ) !== false ) {
 					$reason .= "post_mime_type:script ";
 				}
-				echo "found possible problems in post ($reason) ID: " . $myrow->ID . '<br />';
+				echo sprintf( __('found possible problems in post (%s) ID:%s',SFS_TXTDOMAIN)
+						,$reason,$myrow->ID).'<br />';
+
 			}
 		} else {
-			echo "<br />Nothing found in posts.<br />";
+			echo '<br />'.__('Nothing found in posts.',SFS_TXTDOMAIN).'<br />';
 			$disp = false;
 		}
 		echo "<hr />";
 // comments: comment_ID: author_url, comment_agent, comment_author, comment_email
 		$ptab = $pre . 'comments';
-		echo "<br /><br />Testing Comments<br />";
+		echo '<br /><br />'.__('Testing Comments',SFS_TXTDOMAIN).'<br />';
 		flush();
 		$sql    = "select comment_ID,comment_author_url,comment_agent,comment_author,comment_author_email,comment_content
 from $ptab where 
@@ -261,16 +271,20 @@ INSTR(LCASE(comment_author_url), 'javascript:') >0
 				if ( strpos( strtolower( $myrow->comment_content ), 'javascript:' ) !== false ) {
 					$reason .= "comment_content:javascript: ";
 				}
-				echo "found possible problems in comment ($reason) ID" . $myrow->comment_ID . '<br />';
+				echo sprintf( __('found possible problems in comment (%s) ID:%s',SFS_TXTDOMAIN)
+						,$reason,$myrow->comment_ID).'<br />';
+
 			}
 		} else {
 			echo "<br />Nothing found in comments.<br />";
+			echo '<br />'.__('Nothing found in comments.',SFS_TXTDOMAIN).'<br />';
+
 		}
 		flush();
 		echo "<hr />";
 // links: links_id: link_url, link_image, link_description, link_notes, link_rss,link_rss
 		$ptab = $pre . 'links';
-		echo "<br /><br />Testing Links<br />";
+		echo '<br /><br />'.__('Testing Links',SFS_TXTDOMAIN).'<br />';
 		flush();
 		$sql    = "select link_ID,link_url,link_image,link_description,link_notes
 from $ptab where 
@@ -343,15 +357,16 @@ INSTR(LCASE(link_url), 'javascript:') >0
 				if ( strpos( strtolower( $myrow->link_url ), 'javascript:' ) !== false ) {
 					$reason .= "link_url:javascript: ";
 				}
-				echo "found possible problems in links ($reason) ID:" . $myrow->link_ID . '<br />';
+				echo sprintf( __('found possible problems in links (%s) ID:%s',SFS_TXTDOMAIN)
+						,$reason,$myrow->link_ID).'<br />';
 			}
 		} else {
-			echo "<br />Nothing found in links.<br />";
+			echo '<br />'.__('Nothing found in links.',SFS_TXTDOMAIN).'<br />';
 		}
 		echo "<hr />";
 // users: ID: user_login,user_nicename, user_email, user_url, display_name
 		$ptab = $pre . 'users';
-		echo "<br /><br />Testing Users<br />";
+		echo '<br /><br />'.__('Testing Users',SFS_TXTDOMAIN).'<br />';
 		flush();
 		$sql    = "select ID,user_login,user_nicename,user_email,user_url,display_name 
 from $ptab where 
@@ -429,16 +444,18 @@ INSTR(LCASE(user_email), 'javascript:')>0
 				if ( strpos( strtolower( $myrow->user_url ), 'javascript:' ) !== false ) {
 					$reason .= "user_url:javascript: ";
 				}
-				echo "found possible problems in Users ($reason) ID:" . $myrow->ID . '<br />';
+				echo sprintf( __('found possible problems in Users (%s) ID:%s',SFS_TXTDOMAIN)
+					,$reason,$myrow->ID
+					). '<br />';
 			}
 		} else {
-			echo "<br />Nothing found in users.<br />";
+			echo '<br />'.__('Nothing found in users.',SFS_TXTDOMAIN).'<br />';
 		}
 		echo "<hr />";
 // options: option_id option_value, option_name
 // I may have to update this as new websites show up
 		$ptab = $pre . 'options';
-		echo "<br /><br />Testing Options Table for HTML<br />";
+		echo '<br /><br />'.__('Testing Options Table for HTML',SFS_TXTDOMAIN).'<br />';
 		flush();
 		$badguys = array(
 			'eval('                              => 'eval function found',
@@ -482,13 +499,16 @@ from $ptab where
 						}
 					}
 				}
-				echo "<strong>Found possible problems in Option $name ($reason)</strong> option_id:" . $myrow->option_id . ", value: $line<br /><br />";
+				echo '<strong>'.sprintf(
+					__('Found possible problems in Option %s (%s) option_id: %s value: %s',SFS_TXTDOMAIN)
+					,$name,$reason,$myrow->option_id,$line).'</strong><br /><br />';
 			}
 		} else {
-			echo "<br />Nothing found in options.<br />";
+			echo '<br />'.__('Nothing found in options.',SFS_TXTDOMAIN).'<br />';
+
 		}
-		echo "<hr />";
-		echo "<h2>Scanning Themes and Plugins for eval</h2>";
+		echo '<hr />';
+		echo '<h2>'.__('Scanning Themes and Plugins for eval',SFS_TXTDOMAIN).'</h2>';
 		flush();
 		if ( ss_scan_for_eval() ) {
 			$disp = true;
@@ -496,22 +516,20 @@ from $ptab where
 	;
 		if ( $disp ) {
 			?>
-            <h2>Possible Problems Found!</h2>
-            <p>These are warnings only. Some content and plugins might not be malicious, but still contain one or more
-                of these indicators. Please investigate all indications of problems. The plugin may err on the side of
-                caution.</p>
-            <p>Although there are legitimate reasons for using the eval function, and Javascript uses it frequently,
-                finding eval in PHP code is in the very least bad practice, and the worst is used to hide malicious
-                code. If eval() comes up in a scan, try to get rid of it.</p>
-            <p>Your code could contain 'eval', or 'document.write(unescape(' or 'try{window.onload' or
-                setAttribute('src'. These are markers for problems such as SQL injection or cross-browser Javascript.
-                &lt;script&gt; tags should occur in your posts, if you added them, but should not be found anywhere
-                else, except options. Options often have scripts for displaying Facebook, Twitter, etc. Be careful,
-                though, if one appears in an option. Most of the time it is OK, but make sure.</p>
+            <h2><?php echo __('Possible Problems Found!',SFS_TXTDOMAIN);?></h2>
+	<p>
+	<?php echo __('These are warnings only. Some content and plugins might not be malicious, but still contain one or more of these indicators. Please investigate all indications of problems. The plugin may err on the side of caution.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('Although there are legitimate reasons for using the eval function, and Javascript uses it frequently, finding eval in PHP code is in the very least bad practice, and the worst is used to hide malicious code. If eval() comes up in a scan, try to get rid of it.',SFS_TXTDOMAIN);?>
+	</p>
+	<p>
+	<?php echo __('Your code could contain \'eval\', or \'document.write(unescape(\' or \'try{window.onload\' or setAttribute(\'src\'. These are markers for problems such as SQL injection or cross-browser Javascript. &lt;script&gt; tags should occur in your posts, if you added them, but should not be found anywhere else, except options. Options often have scripts for displaying Facebook, Twitter, etc. Be careful, though, if one appears in an option. Most of the time it is OK, but make sure.',SFS_TXTDOMAIN);?>
+	</p>
 			<?php
 		} else {
 			?>
-            <h2>No Problems Found</h2>
+            <h2><?php echo __('No Problems Found',SFS_TXTDOMAIN);?></h2>
             <p>It appears that there are no eval or suspicious Javascript functions in the code in your wp-content
                 directory. That does not mean that you are safe, only that a threat may be well-hidden.</p>
 			<?php
@@ -527,7 +545,8 @@ from $ptab where
 		$phparray = ss_scan_for_eval_recurse( realpath( get_home_path() ), $phparray );
 // phparray should have a list of all of the PHP files
 		$disp = false;
-		echo "Files: <ol>";
+            
+		echo __('Files',SFS_TXTDOMAIN).': <ol>';
 		for ( $j = 0; $j < count( $phparray ); $j ++ ) {
 // ignore my work on this subject
 			if ( strpos( $phparray[ $j ], 'threat_scan' ) === false && strpos( $phparray[ $j ], 'threat-scan' ) === false ) {

@@ -13,6 +13,7 @@ FULL:
 	settings/ss_diagnostics.php
 	settings/ss_option_maint.php		(2019.12.06)
 	settings/ss_summary.php
+	settings/ss_threat_scan.php		(2019.12.06)
 	settings/ss_webservices_settings.php	(2019.12.06)
 
 

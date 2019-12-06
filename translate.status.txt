@@ -8,9 +8,12 @@ FULL:
 	settings/ss_allowlist_settings.php
 	settings/ss_allowreq.php
 	settings/ss_cache.php	+classes/ss_get_bcache.php +classes/ss_get_gcache.php
-	settings/ss_challenge.php	(2019.12.09)
+	settings/ss_challenge.php		(2019.12.05)
 	settings/ss_denylist_settings.php 
 	settings/ss_diagnostics.php
+	settings/ss_option_maint.php		(2019.12.06)
 	settings/ss_summary.php
+	settings/ss_webservices_settings.php	(2019.12.06)
+
 
 CURWORK:

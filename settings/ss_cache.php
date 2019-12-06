@@ -17,16 +17,6 @@ $goodips= array_merge($goodips,['4.4.4.4'=>'2019/12/01 01:00:00'],['5.5.5.5'=>'2
 ss_set_stats( $stats );
 */
 
-
-
-
-
-
-//$trash   = SS_PLUGIN_URL . 'images/trash.png';
-//$tdown   = SS_PLUGIN_URL . 'images/tdown.png';
-//$tup     = SS_PLUGIN_URL . 'images/tup.png'; // fix this
-//$whois   = SS_PLUGIN_URL . 'images/whois.png'; // fix this
-
 $nonce = ( array_key_exists( 'ss_stop_spammers_control', $_POST )?$_POST['ss_stop_spammers_control']:'');
 $ajaxurl = admin_url( 'admin-ajax.php' );
 
@@ -62,7 +52,7 @@ if ( wp_verify_nonce( $nonce, 'ss_stopspam_update' ) ) {
 
 $nonce = wp_create_nonce( 'ss_stopspam_update' );
 ?>
-<div id="ss-plugin" class="wrap">
+<div id="ss-plugin" class="wrap ss-set-alt">
     <h1><?php echo __('Stop Spammers — Cache',SFS_TXTDOMAIN);?></h1>
 	<?php if ( ! empty( $msg ) ) {echo "$msg";} ?>
 	<p><?php echo __('Whenever a user tries to leave a comment, register, or login, they are recorded in the Good Cache'

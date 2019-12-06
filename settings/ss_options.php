@@ -218,7 +218,7 @@ if ( ! empty( $nonce ) && wp_verify_nonce( $nonce, 'ss_stopspam_update' ) ) {
 }
 $nonce = wp_create_nonce( 'ss_stopspam_update' );
 ?>
-<div id="ss-plugin" class="wrap">
+<div id="ss-plugin" class="wrap ss-set-alt">
     <h1><?php echo __('Stop Spammers — Protection Options',SFS_TXTDOMAIN); ?></h1>
 	<?php if ( ! empty( $msg ) ) echo "$msg"; ?>
     <form method="post" action="" name="ss">

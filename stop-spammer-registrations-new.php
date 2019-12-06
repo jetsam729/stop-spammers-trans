@@ -571,10 +571,6 @@ function get_post_variables() {
 	return $ansa;
 }
 
-function ss_addons_d( $config = array() ) {
-// dummy function for testing
-	return $config;
-}
 
 function ss_caught_action( $ip = '', $post = array() ) {
 // this is hit on spam detect for addons - added this for a template for testing - not needed

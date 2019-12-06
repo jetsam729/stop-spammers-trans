@@ -21,10 +21,13 @@ if ( ! empty( $nonce ) && wp_verify_nonce( $nonce, 'ss_stopspam_update' ) ) {
 }
 $nonce = wp_create_nonce( 'ss_stopspam_update' );
 ?>
-<div id="ss-plugin" class="wrap">
+<div id="ss-plugin" class="wrap ss-set-alt">
     <h1>Stop Spammers — Threat Scan</h1>
+
     <div class="notice notice-warning">
-        <p>This feature is to be considered experimental. Use with caution and at your own risk.</p>
+	<p>
+	<?php echo __('This feature is to be considered experimental. Use with caution and at your own risk.',SFS_TXTDOMAIN); ?>
+	</p>
     </div>
     <p>This is a very simple threat scan that looks for things out of place in the content directory as well as the
         database.</p>
@@ -734,3 +737,4 @@ from $ptab where
 
 	?>
 </div>
+<?php

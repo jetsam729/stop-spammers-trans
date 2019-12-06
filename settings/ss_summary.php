@@ -238,7 +238,7 @@ if ( wp_verify_nonce( $nonce, 'ss_stopspam_update' ) ) {
 $nonce = wp_create_nonce( 'ss_stopspam_update' );
 
 ?>
-<div id="ss-plugin" class="wrap">
+<div id="ss-plugin" class="wrap ss-set-alt">
     <h1><?php echo __('Stop Spammers — Summary',SFS_TXTDOMAIN); ?></h1>
     <p>Version <span class="green"><?php echo SS_VERSION; ?></span></p>
 	<?php
@@ -323,7 +323,7 @@ $nonce = wp_create_nonce( 'ss_stopspam_update' );
         <p>There are <a href='edit-comments.php?comment_status=moderated'><?php echo $num; ?></a> comments waiting to be moderated.</p>
 		<?php
 	}
-	$summry = '<div style="width:60%;">';
+	$summry = '<div>';
 
 	foreach ( $counters as $v1 => $v2 ) {
 

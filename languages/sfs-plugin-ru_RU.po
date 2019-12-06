@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2019-12-01 12:00+0300\n"
-"PO-Revision-Date: 2019-12-06 16:32+0300\n"
+"PO-Revision-Date: 2019-12-07 00:00+0300\n"
 "X-Generator: JetFAR\n"
 "Last-Translator: [729]Jetsam\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
@@ -1932,6 +1932,79 @@ msgstr ""
 
 msgid "Files"
 msgstr "Файлы"
+
+# # ss_network.php ----------------------------------------
+msgid "Stop Spammers — Multisite"
+msgstr "Stop Spammers — Мультисайт (WPMU)"
+
+msgid "Network of Blogs"
+msgstr "Сеть блогов"
+
+msgid ""
+"If you are running WPMU and want to control options and history through the "
+"main login admin panel, select ON. If you select OFF, each blog will have to "
+"configure the plugin separately, and each blog will have a separte history."
+msgstr ""
+"Если вы работаете с WPMU и хотите управлять параметрами и историей с помощью "
+"главной панели администратора, выберите ON. Если вы выберете OFF, каждый "
+"блог будет настраивать плагин отдельно, и у каждого блога будет отдельная "
+"история.<br />WPMU (мультисайт) — это режим работы WordPress, который "
+"позволяет использовать имеющиеся файлы ядра и существующую базу данных для "
+"создания сети из сайтов WordPress. При этом каждый сайт в сети имеет свои "
+"собственные настройки, а плагины, темы и пользователи становятся общими, что "
+"дает ряд преимуществ."
+
+msgid "Networked ON"
+msgstr "Режим сети включен"
+
+msgid "Networked OFF"
+msgstr "Режим сети выключен"
+
+msgid "Network Blog Option"
+msgstr "Настройки сети из блогов (WPMU)"
+
+# # -- ss_reports.php ----------------------------------------
+msgid "Stop Spammers — Log Report"
+msgstr "Stop Spammers — лог отчетов"
+
+msgid "Activity Log Cleared"
+msgstr "Лог отчетов очищен"
+
+msgid "There are %s spam comments waiting for you to report them."
+msgstr "Вас ожидают %s спам-комментов."
+
+msgid "There are %s comments waiting to be moderated."
+msgstr "Вашей модерации ожидают %s комментов."
+
+msgid "History Size"
+msgstr "Размер истории"
+
+msgid "Select the number of items to save in the History. Keep this small."
+msgstr "Выберите количество записей истории. Не храните слишком много."
+
+msgid "Update Log Size"
+msgstr "Установить размер лога"
+
+msgid "Clear Activity"
+msgstr "Чистка лога"
+
+msgid "Clear Recent Activity"
+msgstr "Очистить лог"
+
+msgid "Nothing in logs."
+msgstr "Ничего в логе нет."
+
+msgid "Date/Time"
+msgstr "Дата/время"
+
+msgid "Author, User/Pwd"
+msgstr "Автор, User/Pass"
+
+msgid "Script"
+msgstr "Script"
+
+msgid "Blog"
+msgstr "Блог"
 
 # ------------------ only into [729]jetsam fork StopSpamReg. -------------------------
 msgid "Mixed"

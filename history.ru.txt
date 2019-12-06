@@ -1,3 +1,6 @@
+2019.12.07:
+	переведены:
+		ss_reports.php
 2019.12.06:
 	+ ss_threat_scan.php: если идет скан - кнопка и первоначальный текст убраны (чтобы сто раз не нажимать)
 	+ add в ss_option_maint.php добавлено сообшение при обновлении опций
@@ -6,6 +9,7 @@
 		ss_webservices_settings.php
 		ss_option_maint.php
 		ss_threat_scan.php
+		ss_network.php
 2019.12.05:
 	переведены:
 		ss_challenge.php

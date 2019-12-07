@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2019-12-01 12:00+0300\n"
-"PO-Revision-Date: 2019-12-07 00:00+0300\n"
+"PO-Revision-Date: 2019-12-07 23:00+0300\n"
 "X-Generator: JetFAR\n"
 "Last-Translator: [729]Jetsam\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1566,9 +1566,88 @@ msgstr ""
 msgid "Blog"
 msgstr ""
 
+# # ss-admin-options.php --------------------------------------------------
+# # js script
+msgid "Spam Reported"
+msgstr ""
+
+msgid "Spam Already Reported"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid ""
+"Stop Spammers has prevented <strong>%s</strong> spammers from registering or "
+"leaving comments."
+msgstr ""
+
+msgid ""
+"user(s) has been denied access and <a href=\"admin.php?page=ss_allowrequests"
+"\">requested</a> that you add them to the Allow List."
+msgstr ""
+
+msgid "Report to SFS"
+msgstr ""
+
+msgid "No Options Set"
+msgstr ""
+
+msgid "No Comment ID Found"
+msgstr ""
+
+msgid "No Comment Found for %s"
+msgstr ""
+
+msgid "Cannot Report Spam without API Key"
+msgstr ""
+
+msgid "Recent Duplicate Entry"
+msgstr ""
+
+msgid "Returning from AJAX"
+msgstr ""
+
+msgid "Not Enabled"
+msgstr ""
+
+msgid "Access to the Stop Forum Spam Database Shows Errors"
+msgstr ""
+
+msgid "Response Was"
+msgstr ""
+
+msgid "Access to the Stop Forum Spam Database is Not Working"
+msgstr ""
+
+msgid "Access to the Stop Forum Spam Database is Working"
+msgstr ""
+
+msgid "No Response from the Stop Forum Spam API Call"
+msgstr ""
+
+msgid "Function Not Found"
+msgstr ""
+
+msgid "Unrecognized function \"%s\""
+msgstr ""
+
+msgid "Something is missing \"%s\""
+msgstr ""
+
+# # -- stop-spam-utils.php --------------------------------------
+msgid "File Not Found"
+msgstr ""
+
 # ------------------ only into [729]jetsam fork StopSpamReg. -------------------------
 msgid "Mixed"
 msgstr ""
 
 msgid "Mixed utils"
+msgstr ""
+
+msgid "TEST STRING TRANSLATE"
 msgstr ""

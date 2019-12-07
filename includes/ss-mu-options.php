@@ -1,12 +1,12 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) die;
+
 /*
 sfr-mu-options.php
 provides mu support to the Stop Spammers plugin
 this hooks the options functions of WP in order to update one option from blog #1`
 */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-} // just in case
+
 // now we need to get a ask the user for a list of options that he wants to get
 // call the setup from the plugin proper
 // ssp_global_setup(); // when plugin is loaded this get's done

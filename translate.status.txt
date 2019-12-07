@@ -19,4 +19,7 @@ FULL:
 	settings/ss_threat_scan.php		(2019.12.06)
 	settings/ss_webservices_settings.php	(2019.12.06)
 
+	includes/ss-admin-options.php		(2019.12.07)
+	includes/stop-spam-utils.php		(2019.12.07)
+
 CURWORK:

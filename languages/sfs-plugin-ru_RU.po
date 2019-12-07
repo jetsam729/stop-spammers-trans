@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2019-12-01 12:00+0300\n"
-"PO-Revision-Date: 2019-12-07 00:00+0300\n"
+"PO-Revision-Date: 2019-12-07 23:00+0300\n"
 "X-Generator: JetFAR\n"
 "Last-Translator: [729]Jetsam\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
@@ -2006,9 +2006,92 @@ msgstr "Script"
 msgid "Blog"
 msgstr "Блог"
 
+# # ss-admin-options.php --------------------------------------------------
+# # js script
+msgid "Spam Reported"
+msgstr "О спаме сообщили"
+
+msgid "Spam Already Reported"
+msgstr "О спаме уже сообщали"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid ""
+"Stop Spammers has prevented <strong>%s</strong> spammers from registering or "
+"leaving comments."
+msgstr ""
+"Stop Spammers не позволил <strong>%s</ strong> спамерам зарегистрироваться "
+"или оставлить комментарии."
+
+msgid ""
+"user(s) has been denied access and <a href=\"admin.php?page=ss_allowrequests"
+"\">requested</a> that you add them to the Allow List."
+msgstr ""
+"пользователей блокировано и <a href=\"admin.php?page=ss_allowrequests"
+"\">запросов</a> на добавление в Белый список."
+
+msgid "Report to SFS"
+msgstr "Отчет в SFS"
+
+msgid "No Options Set"
+msgstr "Нет настроек"
+
+msgid "No Comment ID Found"
+msgstr "ID коммента не найдено"
+
+msgid "No Comment Found for %s"
+msgstr "Не найдено коммента для %s"
+
+msgid "Cannot Report Spam without API Key"
+msgstr "Без ключа API нельзя отсылать отчеты."
+
+msgid "Recent Duplicate Entry"
+msgstr "Дубликат - рапорт был"
+
+msgid "Returning from AJAX"
+msgstr "Возвращение из AJAX"
+
+msgid "Not Enabled"
+msgstr "Не включено"
+
+msgid "Access to the Stop Forum Spam Database Shows Errors"
+msgstr "Доступ к Stop Forum Spam вернул ошибку"
+
+msgid "Response Was"
+msgstr "Ответ Stop Forum Spam был"
+
+msgid "Access to the Stop Forum Spam Database is Not Working"
+msgstr "Доступ к Stop Forum Spam не работает"
+
+msgid "Access to the Stop Forum Spam Database is Working"
+msgstr "Доступ к Stop Forum Spam работает"
+
+msgid "No Response from the Stop Forum Spam API Call"
+msgstr "Нет ответа от вызова API Stop Forum Spam"
+
+msgid "Function Not Found"
+msgstr "Функция не найдена"
+
+msgid "Unrecognized function \"%s\""
+msgstr "Неизвестная функция \"%s\""
+
+msgid "Something is missing \"%s\""
+msgstr "Ошибочный параметр \"%s\""
+
+# # -- stop-spam-utils.php --------------------------------------
+msgid "File Not Found"
+msgstr "Файл не найден"
+
 # ------------------ only into [729]jetsam fork StopSpamReg. -------------------------
 msgid "Mixed"
 msgstr "Разное"
 
 msgid "Mixed utils"
 msgstr "Разное"
+
+msgid "TEST STRING TRANSLATE"
+msgstr "Проверка строки ввода"

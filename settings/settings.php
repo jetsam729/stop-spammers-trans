@@ -124,8 +124,8 @@ function ss_admin_menu_l() {
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		add_submenu_page(
 			'stop_spammers',
-			__('Multisite — Stop Spammers',SFS_TXTDOMAIN),
-			__('Network',SFS_TXTDOMAIN),
+			__('Stop Spammers — Multisite',SFS_TXTDOMAIN),
+			__('Network of Blogs',SFS_TXTDOMAIN),
 			'manage_options',
 			'ss_network',
 			'ss_network'
@@ -150,6 +150,7 @@ function ss_reports() 			{include_setting( "ss_reports.php" );}
 function ss_summary()			{include_setting( "ss_summary.php" );}
 function ss_threat_scan()		{include_setting( "ss_threat_scan.php" );}
 function ss_webservices_settings()	{include_setting( "ss_webservices_settings.php" );}
+
 
 function include_setting( $file ) {
 	sfs_errorsonoff();

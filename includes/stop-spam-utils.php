@@ -1,10 +1,10 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) die;
+
 // dumped the utility functions into its own separate file
 // I am trying to keep the plugin foorprint down as low as possible
 // rename each function with an _l and then call after a load
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+
 function ss_append_file( $filename, &$content ) {
 // this writes content to a file in the uploads director in the 'stop-spammer-registrations' directory
 // changed to write to the current directory - content_dir is a bad place
@@ -23,7 +23,7 @@ function ss_append_file( $filename, &$content ) {
 function ss_read_file( $f, $method = 'GET' ) {
 // try this using Wp_Http
 	if ( ! class_exists( 'WP_Http' ) ) {
-		include_once( ABSPATH . WPINC . '/class-http.php' );
+		@include_once( ABSPATH . WPINC . '/class-http.php' );
 	}
 	$request          = new WP_Http;
 	$parms            = array();
@@ -56,7 +56,7 @@ function ss_read_filex( $filename ) {
 		return file_get_contents( $file );
 	}
 
-	return "File Not Found";
+	return	__('File Not Found',SFS_TXTDOMAIN);
 }
 
 function ss_file_exists( $filename ) {
@@ -97,18 +97,14 @@ function sfs_debug_msg( $msg ) {
 		return;
 	}
 	$now = date( 'Y/m/d H:i:s', time() + ( get_option( 'gmt_offset' ) * 3600 ) );
+
 // get the program that is running
-	$sname = $_SERVER["REQUEST_URI"];
-	if ( empty( $sname ) ) {
-		$sname = $_SERVER["SCRIPT_NAME"];
-	}
-	$f = '';
-	$f = @fopen( SS_PLUGIN_DATA . ".sfs_debug_output.txt", 'a' );
-	if ( empty( $f ) ) {
-		return false;
-	}
-	@fwrite( $f, $now . ": " . $sname . ", " . $msg . ", " . $ip . "\r\n" );
-	@fclose( $f );
+	$sname = (!empty($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:$_SERVER['SCRIPT_NAME']);
+
+	@file_put_contents( SS_PLUGIN_DATA . ".sfs_debug_output.txt"
+		, "$now : $sname , $msg  ,  $ip \r\n" 
+		, FILE_APPEND
+		);
 }
 
 function sfs_ErrorHandler( $errno, $errmsg, $filename, $linenum, $vars ) {
@@ -116,7 +112,7 @@ function sfs_ErrorHandler( $errno, $errmsg, $filename, $linenum, $vars ) {
 // we are only concerned with the errors and warnings, not the notices
 // if ($errno==E_NOTICE || $errno==E_WARNING) return false;
 // if ($errno==2048) return; // WordPress throws deprecated all over the place
-	$serrno = "";
+	$serrno = '';
 	if (
 		( strpos( $filename, 'ss' ) === false )
 		&& ( strpos( $filename, 'admin-options' ) === false )

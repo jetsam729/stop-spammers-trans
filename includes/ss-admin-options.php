@@ -1,7 +1,7 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+if ( ! defined( 'ABSPATH' ) ) die;
+
+
 $options = ss_get_options();
 if ( $options['addtoallowlist'] == 'Y' ) {
 	ss_sfs_check_admin(); // adds user to Allow List
@@ -18,24 +18,34 @@ if ( SS_MU == 'Y' ) {
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'ss_sp_plugin_action_links' );
 	add_filter( 'manage_users_columns', 'ss_sfs_ip_column_head' );
 }
+
+
 add_action( 'network_admin_menu', 'ss_admin_menu' );
 add_filter( 'comment_row_actions', 'ss_row', 1, 2 );
+
 // add_action('wp_ajax_nopriv_sfs_sub', 'sfs_handle_ajax_sub');	
 add_action( 'wp_ajax_sfs_sub', 'sfs_handle_ajax_sub' );
 // new replacement for multiple AJAX hooks
 // add_action('wp_ajax_nopriv_sfs_process', 'sfs_handle_ajax_sfs_process');	
 add_action( 'wp_ajax_sfs_process', 'sfs_handle_ajax_sfs_process' );
 add_action( 'manage_users_custom_column', 'ss_sfs_ip_column', 10, 3 );
+
 // the uninstall hook only gets set if user is logged in and can manage options (plugins)
 if ( function_exists( 'register_uninstall_hook' ) ) {
 // uncomment this or when we go to beta
 // register_uninstall_hook(__FILE__, 'ss_sfs_reg_uninstall');
 }
-// do this only if a valid IP and not Cloudflare
+
+/* removed from translate script 
 add_action( 'admin_enqueue_scripts', 'sfs_handle_ajax' );
-function sfs_handle_ajax() {
-	wp_enqueue_script( 'stop-spammers', SS_PLUGIN_URL . 'js/sfs_handle_ajax.js', false );
-}
+function sfs_handle_ajax() {wp_enqueue_script( 'stop-spammers', SS_PLUGIN_URL . 'js/sfs_handle_ajax.js', false );}
+*/
+
+/* 
+jetsam: added/replace amin.js as <script> for translate on-the-fly! 
+*/
+add_action( 'admin_print_footer_scripts', 'ss_insert_admin_js' );
+
 
 function ss_sp_plugin_action_links( $links, $file ) {
 // get the links
@@ -43,9 +53,11 @@ function ss_sp_plugin_action_links( $links, $file ) {
 		return $links;
 	}
 	if ( SS_MU == 'Y' ) {
-		$link = '<a href="' . admin_url( 'network/admin.php?page=stop_spammers' ) . '">Settings</a>';
+		$link = '<a href="' . admin_url( 'network/admin.php?page=stop_spammers' ) . '">'
+			.__('Settings',SFS_TXTDOMAIN).'</a>';
 	} else {
-		$link = '<a href="' . admin_url( 'admin.php?page=stop_spammers' ) . '">Settings</a>';
+		$link = '<a href="' . admin_url( 'admin.php?page=stop_spammers' ) . '">'
+			.__('Settings',SFS_TXTDOMAIN).'</a>';
 	}
 // check to see if we are in network
 // to-do
@@ -61,13 +73,16 @@ function ss_sp_rightnow() {
 	if ( $spmcount > 0 ) {
 // steal the Akismet stats CSS format 
 // get the path to the plugin
-		echo "<p>Stop Spammers has prevented <strong>$spmcount</strong> spammers from registering or leaving comments.";
-		echo "</p>";
+		echo	'<p>'
+			.sprintf(__('Stop Spammers has prevented <strong>%s</strong> spammers from registering or leaving comments.',SFS_TXTDOMAIN)
+				,$spmcount)
+			.'</p>';
 	}
-	if ( count( $wlrequests ) == 1 ) {
-		echo "<p><strong>" . count( $wlrequests ) . "</strong> user has been denied access and <a href='admin.php?page=ss_allowrequests'>requested</a> that you add them to the Allow List.</p>";
-	} else if ( count( $wlrequests ) > 0 ) {
-		echo "<p><strong>" . count( $wlrequests ) . "</strong> users have been denied access and <a href='admin.php?page=ss_allowrequests'>requested</a> that you add them to the Allow List.</p>";
+
+	if ( count( $wlrequests ) >0 ) {
+		echo '<p><strong>' . count( $wlrequests ) . '</strong> '
+		.__('user(s) has been denied access and <a href="admin.php?page=ss_allowrequests">requested</a> that you add them to the Allow List.',SFS_TXTDOMAIN)
+		.'</p>';
 	}
 }
 
@@ -137,8 +152,9 @@ function ss_row( $actions, $comment ) {
 		$onclick = "onclick=\"sfs_ajax_report_spam(this,'$ID','$blog','$ajaxurl');return false;\"";
 	}
 	if ( ! empty( $email ) ) {
-		$action .= "|";
-		$action .= "<a $exst title=\"Report to Stop Forum Spam (SFS)\" $target $href $onclick class='delete:the-comment-list:comment-$ID::delete=1 delete vim-d vim-destructive'> Report to SFS</a>";
+		$action .= '|';
+		$action .= "<a $exst title=\"Report to Stop Forum Spam (SFS)\" $target $href $onclick class='delete:the-comment-list:comment-$ID::delete=1 delete vim-d vim-destructive'> "
+			.__('Report to SFS',SFS_TXTDOMAIN).'</a>';
 	}
 	$actions['check_spam'] = $action;
 
@@ -171,16 +187,16 @@ function sfs_handle_ajax_sub( $data ) {
 // get the configuration items
 	$options = get_option( 'ss_stop_sp_reg_options' ); // for some reason the main call is not available?
 	if ( empty( $options ) ) { // can't happen?
-		echo " No Options Set";
-		exit();
+		echo ' '.__('No Options Set',SFS_TXTDOMAIN);
+		die;
 	}
 // print_r($options);
 	extract( $options );
 // get the comment_id parameter	
 	$comment_id = urlencode( $_GET['comment_id'] );
 	if ( empty( $comment_id ) ) {
-		echo " No Comment ID Found";
-		exit();
+		echo ' '.__('No Comment ID Found',SFS_TXTDOMAIN);
+		die;
 	}
 // need to pass the blog ID also
 	$blog = '';
@@ -202,8 +218,8 @@ function sfs_handle_ajax_sub( $data ) {
 		);
 	} else {
 		if ( empty( $comment ) ) {
-			echo " No Comment Found for $comment_id";
-			exit();
+			echo ' '.sprintf(__('No Comment Found for %s',SFS_TXTDOMAIN),$comment_id);
+			die;
 		}
 	}
 // print_r($comment);
@@ -245,8 +261,8 @@ function sfs_handle_ajax_sub( $data ) {
 		$evidence = substr( $evidence, 0, 125 ) . '...';
 	}
 	if ( empty( $apikey ) ) {
-		echo "Cannot Report Spam without API Key";
-		exit();
+		echo __('Cannot Report Spam without API Key',SFS_TXTDOMAIN);
+		die;
 	}
 	$hget = "https://www.stopforumspam.com/add.php?ip_addr=$ip_addr&api_key=$apikey&email=$email&username=$uname&evidence=$evidence";
 // echo $hget;
@@ -254,11 +270,11 @@ function sfs_handle_ajax_sub( $data ) {
 	if ( stripos( $ret, 'data submitted successfully' ) !== false ) {
 		echo $ret;
 	} else if ( stripos( $ret, 'recent duplicate entry' ) !== false ) {
-		echo ' Recent Duplicate Entry ';
+		echo ' '.__('Recent Duplicate Entry',SFS_TXTDOMAIN).' ';
 	} else {
-		echo ' Returning from AJAX: ' . $hget . ' - ' . $ret;
+		' '.__('Returning from AJAX',SFS_TXTDOMAIN).' : ' . $hget . ' - ' . $ret;
 	}
-	exit();
+	die;
 }
 
 function sfs_get_urls( $content ) {
@@ -291,8 +307,8 @@ function sfs_get_urls( $content ) {
 
 function sfs_handle_ajax_check( $data ) {
 	if ( ! ipChkk() ) {
-		echo " Not Enabled";
-		exit();
+		echo ' '.__('Not Enabled',SFS_TXTDOMAIN);
+		die;
 	}
 // this does a call to the SFS site to check a known spammer
 // returns success or not
@@ -303,19 +319,19 @@ function sfs_handle_ajax_check( $data ) {
 		$check = trim( $check );
 		$check = trim( $check, '0' );
 		if ( substr( $check, 0, 4 ) == "ERR:" ) {
-			echo " Access to the Stop Forum Spam Database Shows Errors\r\n";
-			echo " Response Was: $check\r\n";
+			echo ' '.__('Access to the Stop Forum Spam Database Shows Errors',SFS_TXTDOMAIN)."\r\n";
+			echo ' '.__('Response Was',SFS_TXTDOMAIN)." :\r\n$check\r\n";
 		}
 // access to the Stop Forum Spam database is working
 		$n = strpos( $check, '<response success="true">' );
 		if ( $n === false ) {
-			echo " Access to the Stop Forum Spam Database is Not Working\r\n";
-			echo " Response was\r\n $check\r\n";
+			echo ' '.__('Access to the Stop Forum Spam Database is Not Working',SFS_TXTDOMAIN)."\r\n";
+			echo ' '.__('Response Was',SFS_TXTDOMAIN)." :\r\n$check\r\n";
 		} else {
-			echo " Access to the Stop Forum Spam Database is Working";
+			echo ' '.__('Access to the Stop Forum Spam Database is Working',SFS_TXTDOMAIN)."\r\n";
 		}
 	} else {
-		echo " No Response from the Stop Forum Spam API Call\r\n";
+		echo ' '.__('No Response from the Stop Forum Spam API Call',SFS_TXTDOMAIN)."\r\n";
 	}
 
 	return;
@@ -338,8 +354,8 @@ function sfs_handle_ajax_sfs_process_watch( $data ) {
 // get the things out of the get
 // check for valid get
 	if ( ! array_key_exists( 'func', $_GET ) ) {
-		echo " Function Not Found";
-		exit();
+		echo ' '.__('Function Not Found',SFS_TXTDOMAIN)."\r\n";
+		die;
 	}
 	$trash     = SS_PLUGIN_URL . 'images/trash.png';
 	$tdown     = SS_PLUGIN_URL . 'images/tdown.png';
@@ -362,16 +378,15 @@ function sfs_handle_ajax_sfs_process_watch( $data ) {
 			$ansa = be_load( 'ss_remove_gcache', $ip, $stats, $options );
 			$show = be_load( 'ss_get_gcache', 'x', $stats, $options );
 			echo $show;
-			exit();
-			break;
+			die;
+
 
 		case 'delete_bcache':
 // deletes a Bad Cache item
 			$ansa = be_load( 'ss_remove_bcache', $ip, $stats, $options );
 			$show = be_load( 'ss_get_bcache', 'x', $stats, $options );
 			echo $show;
-			exit();
-			break;
+			die;
 
 		case 'add_black':
 			if ( $container == 'badips' ) {
@@ -400,21 +415,21 @@ function sfs_handle_ajax_sfs_process_watch( $data ) {
 		case 'delete_wl_row': // this is from the Allow Requests list
 			$ansa = be_load( 'ss_get_alreq', $ip, $stats, $options );
 			echo $ansa;
-			exit();
-			break;
+			die;
+
 		case 'delete_wlip': // this is from the Allow Requests list
 			$ansa = be_load( 'ss_get_alreq', $ip, $stats, $options );
 			echo $ansa;
-			exit();
-			break;
+			die;
+
 		case 'delete_wlem': // this is from the Allow Requests list
 			$ansa = be_load( 'ss_get_alreq', $ip, $stats, $options );
 			echo $ansa;
-			exit();
-			break;
+			die;
+
 		default:
-			echo "\r\n\r\nUnrecognized function '$func'";
-			exit();
+			echo "\r\n\r\n".sprintf(__('Unrecognized function "%s"',SFS_TXTDOMAIN),$func)."\r\n";
+			die;
 	}
 	$ajaxurl  = admin_url( 'admin-ajax.php' );
 	$cachedel = 'delete_gcache';
@@ -422,21 +437,21 @@ function sfs_handle_ajax_sfs_process_watch( $data ) {
 		case 'badips':
 			$show = be_load( 'ss_get_bcache', 'x', $stats, $options );
 			echo $show;
-			exit();
-			break;
+			die;
+
 		case 'goodips':
 			$show = be_load( 'ss_get_gcache', 'x', $stats, $options );
 			echo $show;
-			exit();
-			break;
+			die;
+
 		case 'wlreq':
 			$ansa = be_load( 'ss_get_alreq', $ip, $stats, $options );
 			echo $ansa;
-			exit();
+			die;
 		default:
 // coming from logs report we need to display an appropriate message, I think
-			echo "Something is missing $container ";
-			exit();
+			echo ' '.sprintf(__('Something is missing "%s"',SFS_TXTDOMAIN),$container)."\r\n";
+			die;
 	}
 }
 
@@ -480,4 +495,90 @@ function ss_sfs_ip_column( $value, $column_name, $user_id ) {
 	return $value;
 }
 
-?>
+function ss_insert_admin_js() {
+
+$TXT='
+
+<script type="text/javascript">
+
+var sfs_ajax_who = "";
+
+function sfs_ajax_process(sip, contx, sfunc, url) {
+    sfs_ajax_who = contx;
+    var data = {
+	action:	"sfs_process",
+	ip:	sip,
+	cont:	contx,
+	func:	sfunc,
+	ajax_url: url
+    };
+    jQuery.get(ajaxurl, data, sfs_ajax_return_process);
+}
+
+function sfs_ajax_return_process(response) {
+    var el = "";
+    if (response == "OK") {
+        return false;
+    }
+
+    if (response.substring(0, 3) == "err") {
+        alert(response);
+        return false;
+    }
+
+    if (response.substring(0, 4) == "\r\n\r\n") {
+        alert(response);
+        return false;
+    }
+
+    if (sfs_ajax_who != "") {
+        var el = document.getElementById(sfs_ajax_who);
+        el.innerHTML = response;
+    }
+
+    return false;
+}
+
+function sfs_ajax_report_spam(t, id, blog, url, email, ip, user) {
+    sfs_ajax_who = t;
+    var data = {
+	action:		"sfs_sub",
+	blog_id: 	blog,
+	comment_id: 	id,
+	ajax_url:	url,
+	email:		email,
+	ip:		ip,
+	user:		user
+    };
+    jQuery.get(ajaxurl, data, sfs_ajax_return_spam);
+}
+
+function sfs_ajax_return_spam(response) {
+    sfs_ajax_who.innerHTML	= " '.__('Spam Reported',SFS_TXTDOMAIN).'";
+    sfs_ajax_who.style.color	= "green";
+    sfs_ajax_who.style.fontWeight = "bolder";
+
+    if (response.indexOf("data submitted successfully") > 0) {
+        return false;
+    }
+
+    if (response.indexOf("recent duplicate entry") > 0) {
+        sfs_ajax_who.innerHTML	= " '.__('Spam Already Reported',SFS_TXTDOMAIN).'";
+        sfs_ajax_who.style.color = "yellow";
+        sfs_ajax_who.style.fontWeight = "bolder";
+        return false;
+    }
+
+    sfs_ajax_who.innerHTML	= " '.__('Status',SFS_TXTDOMAIN).': " + response;
+    sfs_ajax_who.style.color	= "black";
+    sfs_ajax_who.style.fontWeight = "bolder";
+    alert(response);
+    return false;
+}
+
+</script>
+
+';	//
+	echo $TXT;
+}
+

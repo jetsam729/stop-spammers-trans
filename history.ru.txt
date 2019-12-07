@@ -1,6 +1,12 @@
 2019.12.07:
+	! stop-spam-utils.php - оптим код
+	! fix ss-admin-options.php (убрал break; после die;)
+	+ ss-admin-options.php - скрипт из файла admin.js
+		перенесен в add_action( 'admin_print_footer_scripts', 'ss_insert_admin_js' ); - для перевода on-fly
 	переведены:
 		ss_reports.php
+		ss-admin-options.php
+		stop-spam-utils.php
 2019.12.06:
 	+ ss_threat_scan.php: если идет скан - кнопка и первоначальный текст убраны (чтобы сто раз не нажимать)
 	+ add в ss_option_maint.php добавлено сообшение при обновлении опций

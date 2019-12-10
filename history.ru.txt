@@ -1,3 +1,7 @@
+2019.12.10:
+	@ последний релиз.
+	с настоящего момента будет развиваться fork плагина block-spam-reg
+
 2019.12.07:
 	! stop-spam-utils.php - оптим код
 	! fix ss-admin-options.php (убрал break; после die;)

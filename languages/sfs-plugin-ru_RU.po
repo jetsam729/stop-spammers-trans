@@ -921,7 +921,10 @@ msgid "Rejected IPs"
 msgstr "Блокированные IP"
 
 msgid "Good IPs"
-msgstr "допущенные IP"
+msgstr "Белый список IP"
+
+msgid "Options have not changed"
+msgstr "Настройки не изменились"
 
 # # - ss_get_bcache.php, ss_get_gcache.php
 msgid "Look Up WHOIS"
